@@ -154,14 +154,14 @@ hand hygiene
                 index++;
             }
         });
+        document.getElementById("scorebtn").addEventListener("click", function() {
+            document.getElementById("score").value = parseInt(document.getElementById("score").value) + 1;
+        });
 
+	<!--
         document.getElementById("increase").addEventListener("click", function() {
             let delay = parseInt(document.getElementById("delay").value);
             document.getElementById("delay").value = delay + 1;
-        });
-
-        document.getElementById("scorebtn").addEventListener("click", function() {
-            document.getElementById("score").value = parseInt(document.getElementById("score").value) + 1;
         });
 
         document.getElementById("decrease").addEventListener("click", function() {
@@ -170,6 +170,7 @@ hand hygiene
                 document.getElementById("delay").value = delay - 1;
             }
         });
+	-->
 
         function playLines() {
             if (index >= lines.length) {
@@ -183,7 +184,7 @@ hand hygiene
                 speechSynthesis.speak(utterance);
             }
             index++;
-            setTimeout(playLines, parseInt(document.getElementById("delay").value) * 1000);
+            setTimeout(playLines, parseInt(3000);
         }
     </script>
 </body>
