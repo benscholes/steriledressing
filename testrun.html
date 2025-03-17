@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Player</title>
+</head>
+<body>
+    <div id="page" style="margin:auto;width:100%;">
+        <div id="top" style="display: flex; width: 100%; padding-bottom:5px;">
+            <div id="topleft" style="width: 50%; display: flex; justify-content: center;">
+                <button id="play" style="width: 75%;">Play</button>
+            </div>
+            <div id="topright" style="width: 50%; display: flex; justify-content: center; align-content:center;">
+                <button id="step" style="width: 75%;"></br>Step</br>&nbsp</button>
+            </div>
+        </div>
+        <div id="bottom" style="display: flex; width: 100%; padding-bottom:5px;">
+            <div id="bottomleft" style="width: 50%; display: flex; justify-content: center;">
+	        Delay &nbsp
+                <button id="decrease">-</button> &nbsp
+                <input id="delay" type="text" value="3" style="width: 3ch;text-align: center;" read-only> &nbsp
+                <button id="increase">+</button>
+            </div>
+            <div id="bottomright" style="width: 50%; display: flex; justify-content: center;">
+	        <button id="scorebtn">mistake</button> &nbsp
+	        <input id="score" type="text" value="0" style="width: 5ch;text-align: center;" read-only> &nbsp
+		<div style="width: 10%;"> 
+		</div>
+		<input type="checkbox" id="soundCheckbox">sound</input>
+            </div>
+	</div>
+	<div id="txtarea" style="display: flex;justify-content: center;">
+            <textarea id="textArea" style="width:90%;height:80vh">
+Review chart. Order is complete, dated and signed
+Select required materials
+ dressing kit
+ abdo dressing
+ tape
+ saline
+ sterile gloves
+ clean gloves
+state that you would virox the table
+place items on table
+Enter room with table. Hand hygiene
+Patient ID verbal and bracelet
+inform patient of interaction
+obtain consent
+provide for patient privacy
+confirm if patient has any other allergies like latex
+ensure proper placement of equipment. bed height, table at head of bed, table height, garbage can
+expose dressing area but use sheet to cover rest of patient
+hand hygiene
+put on clean gloves
+gently remove soiled dressing
+note properties out loud for drainage
+ quantity 
+ quality 
+ odor
+dispose of dressing in garbage
+assess wound out loud with REEDAT
+ redness
+ edema
+ ecchymosis
+ drainage
+ approximation
+ temperature
+remove soiled gloves and perform hand hygiene
+prepare sterile field 
+remove plastic wrap, make garbage bag
+place dressing tray in center of table
+orient tray so flap tip points towards you
+grasp outer tip of flap open away and fold over table
+pull out side flaps and fold over
+grasp outside of last flap with one hand take forceps and hold up
+step back and open last flap
+position the drape on the table by using hands on border
+position the plastic tray using the forceps
+take garbage bag in the tray and throw it out. dont go below waist or touch garbage
+sort out tray so its ready, extra drapes out
+put down forceps at edge of sterile field (across border)
+take saline solution verify expiry and has been opened
+if opened pour some out, dont touch garbage
+add abdo to sterile field with temp forceps, throw out wrapper
+throw out temp forceps
+hand hygine
+open sterile gloves 
+place inner package on table
+throw out outer package
+open package to expose gloves, do not touch or overlap sterile field
+glove dominant hand first. pinch inside surface of glove and slide on
+glove non dominant hand
+slide gloved fingers under cuff of other glove and lift
+keep gloved thumb away
+slide non dominant hand in 
+ensure the gloves dont touch skin, self or drop below waist
+separate items on sterile field
+extend sterile field by placing a drape on patient
+prepare 3 wet gauze pieces and wring out
+wet clean wound inside wiping not scrubbing
+throw out gauze
+wet clean left side of wound wiping not scrubbing
+throw out gauze
+wet clean right side of wound wiping not scrubbing
+throw out gauze
+dry gauze the inside of the wound 
+throw out
+dry gauze the left of the wound
+throw out
+dry gauze the right of the wound
+throw out
+apply a 4x4 gauze to the wound, forceps do not touch 
+place abdo on top of dry gauze
+sterile field ends
+tape over the edges of abdo
+remove soiled gloves
+dispose of remaining materials
+cover patient and return to comfortable position
+adjust height of bed
+hand hygiene
+	    </textarea>
+	</div>
+    </div>
+
+    <script>
+        let lines = [];
+        let index = 0;
+        let playing = false;
+
+        document.getElementById("play").addEventListener("click", function() {
+            if (playing) return;
+            playing = true;
+            lines = document.getElementById("textArea").value.split("\n");
+            document.getElementById("textArea").value = "";
+            index = 0;
+            playLines();
+        });
+
+        document.getElementById("step").addEventListener("click", function() {
+            if (index == 0) {
+		lines = document.getElementById("textArea").value.split("\n");
+		document.getElementById("textArea").value = "";
+            }
+            if (index < lines.length) {
+                document.getElementById("textArea").value += lines[index] + "\n";
+      		if (soundCheckbox.checked) {
+        		const textToRead = lines[index];
+        		const utterance = new SpeechSynthesisUtterance(textToRead);
+        		speechSynthesis.speak(utterance);
+      		}
+		document.getElementById("textArea").scrollTop = document.getElementById("textArea").scrollHeight;
+                index++;
+            }
+        });
+
+        document.getElementById("increase").addEventListener("click", function() {
+            let delay = parseInt(document.getElementById("delay").value);
+            document.getElementById("delay").value = delay + 1;
+        });
+
+        document.getElementById("scorebtn").addEventListener("click", function() {
+            document.getElementById("score").value = parseInt(document.getElementById("score").value) + 1;
+        });
+
+        document.getElementById("decrease").addEventListener("click", function() {
+            let delay = parseInt(document.getElementById("delay").value);
+            if (delay > 1) {
+                document.getElementById("delay").value = delay - 1;
+            }
+        });
+
+        function playLines() {
+            if (index >= lines.length) {
+                playing = false;
+                return;
+            }
+            document.getElementById("textArea").value += lines[index] + "\n";
+            if (soundCheckbox.checked) {
+                const textToRead = lines[index];
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                speechSynthesis.speak(utterance);
+            }
+            index++;
+            setTimeout(playLines, parseInt(document.getElementById("delay").value) * 1000);
+        }
+    </script>
+</body>
+</html>
