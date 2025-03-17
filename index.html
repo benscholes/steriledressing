@@ -16,14 +16,6 @@
             </div>
         </div>
         <div id="bottom" style="display: flex; width: 100%; padding-bottom:5px;">
-	<!--
-            <div id="bottomleft" style="width: 50%; display: flex; justify-content: center;">
-	        Delay &nbsp
-                <button id="decrease">-</button> &nbsp
-                <input id="delay" type="text" value="3" style="width: 3ch;text-align: center;" read-only> &nbsp
-                <button id="increase">+</button>
-            </div>
-	-->
 	    <div id="bottomleft" style="width: 50%; display: flex; justify-content: center;">
 	        <button id="scorebtn">mistake</button> &nbsp
 	        <input id="score" type="text" value="0" style="width: 5ch;text-align: center;" read-only> &nbsp		    
@@ -158,20 +150,6 @@ hand hygiene
             document.getElementById("score").value = parseInt(document.getElementById("score").value) + 1;
         });
 
-	/*
-        document.getElementById("increase").addEventListener("click", function() {
-            let delay = parseInt(document.getElementById("delay").value);
-            document.getElementById("delay").value = delay + 1;
-        });
-
-        document.getElementById("decrease").addEventListener("click", function() {
-            let delay = parseInt(document.getElementById("delay").value);
-            if (delay > 1) {
-                document.getElementById("delay").value = delay - 1;
-            }
-        });
-	*/
-
         function playLines() {
             if (index >= lines.length) {
                 playing = false;
@@ -184,7 +162,7 @@ hand hygiene
                 speechSynthesis.speak(utterance);
             }
             index++;
-            setTimeout(playLines, parseInt(3000);
+            setTimeout(playLines, 3000);
         }
     </script>
 </body>
